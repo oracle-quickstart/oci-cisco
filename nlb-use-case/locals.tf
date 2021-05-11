@@ -14,6 +14,7 @@ locals {
   listing_fmc_resource_version = var.mp_fmc_listing_resource_version
 
   is_flex_shape       = var.vm_compute_shape == "VM.Standard.E3.Flex" ? [var.vm_flex_shape_ocpus] : []
+  is_flex_fmc_shape       = var.spoke_vm_compute_shape == "VM.Standard.E3.Flex" ? [var.spoke_vm_flex_shape_ocpus] : []
   is_spoke_flex_shape = var.spoke_vm_compute_shape == "VM.Standard.E3.Flex" ? [var.spoke_vm_flex_shape_ocpus] : []
 
 }

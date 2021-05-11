@@ -23,7 +23,15 @@ output "instance_https_urls" {
 }
 
 output "fmc_instance_https_url" {
-  value = formatlist("https://%s", oci_core_instance.cisco-fmc.*.public_ip)
+  value = formatlist("https://%s", oci_core_instance.cisco-fmc.0.public_ip)
+}
+
+output "fmc1_metadata" {
+  value = [oci_core_instance.ftd-vms[0].*.metadata]
+}
+
+output "fmc2_metadata" {
+    value = [oci_core_instance.ftd-vms[1].*.metadata]
 }
 
 output "initial_instruction" {
