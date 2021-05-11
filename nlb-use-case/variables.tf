@@ -25,12 +25,12 @@ variable "mp_listing_id" {
 }
 
 variable "mp_listing_resource_id" {
-  default     = "ocid1.image.oc1..aaaaaaaapdxl2khpuvja3qo5mzcp4ecqpjvm4zmmftfbpnw3elmieemfgcoa"
+  default     = "ocid1.image.oc1..aaaaaaaamybyw5im3tfl5fimi3nd57no3mtczwenrll7fgkzi4zgbc32tlqa"
   description = "Marketplace Listing Image OCID"
 }
 
 variable "mp_listing_resource_version" {
-  default     = "6.7.0-65"
+  default     = "7.0.0-94"
   description = "Marketplace Listing Package/Resource Version"
 }
 
@@ -47,12 +47,12 @@ variable "mp_fmc_listing_id" {
 }
 
 variable "mp_fmc_listing_resource_id" {
-  default     = "ocid1.image.oc1..aaaaaaaarlysnldlbmrq5f5qlp6k26tq7acueghq7cb2dw7kjnyj3fop5vfa"
+  default     = "ocid1.image.oc1..aaaaaaaarhp3ouzhmequs7a7462ro6rdqaxwz7ddizibfxs2tgaxqe6upv7q"
   description = "Marketplace FMC Listing Image OCID"
 }
 
 variable "mp_fmc_listing_resource_version" {
-  default     = "6.7.0-65"
+  default     = "7.0.0-94"
   description = "Marketplace FMC Listing Package/Resource Version"
 }
 

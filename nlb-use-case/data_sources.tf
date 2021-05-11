@@ -15,6 +15,8 @@ data "oci_core_images" "InstanceImageOCID" {
   # operating_system         = var.instance_os
   # operating_system_version = var.linux_os_version
 
+  shape = var.spoke_vm_compute_shape
+
   filter {
     name   = "display_name"
     values = ["^.*Oracle[^G]*$"]

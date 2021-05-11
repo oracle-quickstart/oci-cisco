@@ -1,9 +1,9 @@
 # ------ Create Cisco VMs  
 resource "oci_core_instance" "ftd-vms" {
-  depends_on = [oci_core_app_catalog_subscription.mp_image_subscription]
+  depends_on = [oci_core_app_catalog_subscription.mp_image_subscription , oci_core_instance.cisco-fmc]
   count      = 2
 
-  availability_domain = (var.availability_domain_name != "" ? var.availability_domain_name : data.oci_identity_availability_domains.ads.availability_domains[count.index].name)
+  availability_domain = (var.availability_domain_name != "" ? var.availability_domain_name : data.oci_identity_availability_domains.ads.availability_domains[count.index + 1].name)
   compartment_id      = var.compute_compartment_ocid
   display_name        = "${var.vm_display_name}-${count.index + 1}"
   shape               = var.vm_compute_shape
@@ -35,8 +35,13 @@ resource "oci_core_instance" "ftd-vms" {
 
   metadata = {
     ssh_authorized_keys = var.ssh_public_key
+    user_data = base64encode(templatefile("user-data/cloud-init.tpl", {
+      hostname = "${var.vm_display_name}-${count.index + 1}"
+      fmc_ip = oci_core_instance.cisco-fmc.0.public_ip
+      fmc_reg_key = "cisco123reg${count.index + 1}"
+      fmc_nat_id = "cisco123nat${count.index + 1}"
+    }))
   }
-
 }
 
 resource "oci_core_vnic_attachment" "diagnostic_vnic_attachment" {
@@ -86,6 +91,15 @@ resource "oci_core_vnic_attachment" "outside_vnic_attachment" {
   ]
 }
 
+# data "template_file" "cloud-init-config" {
+#   depends_on = [oci_core_instance.cisco-fmc]
+#   template = file("./userdata/cloud-init.tpl")
+#   count = 2
+#   vars = {
+#     hostname    = "${var.vm_display_name}-${count.index + 1}"
+#     fmc_ip      =  oci_core_instance.cisco-fmc.0.public_ip
+#   }
+# }
 
 # ------ Create Cisco FMC
 resource "oci_core_instance" "cisco-fmc" {
@@ -99,7 +113,7 @@ resource "oci_core_instance" "cisco-fmc" {
   fault_domain        = data.oci_identity_fault_domains.fds.fault_domains[count.index].name
 
   dynamic "shape_config" {
-    for_each = local.is_flex_shape
+    for_each = local.is_flex_fmc_shape
     content {
       ocpus = shape_config.value
     }
@@ -132,7 +146,7 @@ resource "oci_core_instance" "cisco-fmc" {
 resource "oci_core_instance" "web-vms" {
   count = 2
 
-  availability_domain = (var.availability_domain_name != "" ? var.availability_domain_name : data.oci_identity_availability_domains.ads.availability_domains[count.index].name)
+  availability_domain = (var.availability_domain_name != "" ? var.availability_domain_name : data.oci_identity_availability_domains.ads.availability_domains[count.index + 1].name)
   compartment_id      = var.compute_compartment_ocid
   display_name        = "${var.vm_display_name_web}-${count.index + 1}"
   shape               = var.spoke_vm_compute_shape
@@ -173,7 +187,7 @@ resource "oci_core_instance" "web-vms" {
 resource "oci_core_instance" "db-vms" {
   count = 2
 
-  availability_domain = (var.availability_domain_name != "" ? var.availability_domain_name : data.oci_identity_availability_domains.ads.availability_domains[count.index].name)
+  availability_domain = (var.availability_domain_name != "" ? var.availability_domain_name : data.oci_identity_availability_domains.ads.availability_domains[count.index + 1].name)
   compartment_id      = var.compute_compartment_ocid
   display_name        = "${var.vm_display_name_db}-${count.index + 1}"
   shape               = var.spoke_vm_compute_shape

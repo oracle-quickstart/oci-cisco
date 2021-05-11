@@ -220,7 +220,7 @@ variables:
 
   spoke_vm_compute_shape:
     type: oci:core:instanceshape:name
-    default: VM.Standard2.2
+    default: VM.Standard2.4
     title: Spoke Compute Shape
     required: true
     description: Compute Shape of Web/Db Tier VMs
