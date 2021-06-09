@@ -18,7 +18,7 @@ This project contains multiple solutions. Each solution folder is structured in 
 
 This project includes below solutions supported: 
  
-- **Cisco Network Load Balancer - Sandwich Topology** : [Cisco-oci-nlb-sandwich-topology](nlb-use-case) this allows end user to deploy Cisco solutions in hub and spoke architecture. 
+- **Cisco Network Load Balancer - Sandwich Topology** : [Cisco-oci-nlb-sandwich-topology](./ftdv/nlb-use-case) this allows end user to deploy Cisco solutions in hub and spoke architecture. 
 
 ## How to use these templates
 
