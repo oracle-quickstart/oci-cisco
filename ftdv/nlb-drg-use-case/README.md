@@ -1,4 +1,4 @@
-# Network Load Balancer Sandwich Topology - Reference Architecture
+# Network Load Balancer Sandwich Topology - Reference Architecture with DRG Enhancments
 
 We are using hub-and-spoke architecture (often called as star topology) and flexible network load balancer with Cisco Thread Defense Firewall. This architecture has a central component (the hub) that's connected to multiple networks around it, like a spoke. We are using Cisco Threat Defence BOYL Listing from OCI Marketplace.
 
@@ -30,7 +30,7 @@ You can deploy this architecture using two approach explained in each section:
 
 In this section you will follow each steps given below to create this architecture:
 
-1. Click [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://console.us-phoenix-1.oraclecloud.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-cisco/raw/master/nlb-use-case/resource-manager/cisco-nlb.zip)
+1. Click [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://console.us-phoenix-1.oraclecloud.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-cisco/raw/master/ftdv/nlb-use-case/resource-manager/cisco-nlb.zip)
 
     > If you aren't already signed in, when prompted, enter the tenancy and user credentials.
 
