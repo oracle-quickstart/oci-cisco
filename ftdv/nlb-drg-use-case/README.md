@@ -30,7 +30,7 @@ You can deploy this architecture using two approach explained in each section:
 
 In this section you will follow each steps given below to create this architecture:
 
-1. Click [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://console.us-phoenix-1.oraclecloud.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-cisco/raw/master/ftdv/nlb-use-case/resource-manager/cisco-nlb.zip)
+1. Click [![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://console.us-phoenix-1.oraclecloud.com/resourcemanager/stacks/create?region=home&zipUrl=https://github.com/oracle-quickstart/oci-cisco/raw/master/ftdv/nlb-drg-use-case/resource-manager/cisco-nlb.zip)
 
     > If you aren't already signed in, when prompted, enter the tenancy and user credentials.
 
@@ -114,16 +114,58 @@ In this section you will use **Terraform** locally to create this architecture:
     terraform destroy
     ```
 
-## Cisco Firewall Configuration 
+## Cisco Components Configuration 
 
-This section will include necessary configuration which you need to configure to support active/active use-case. 
+You can follow [official guide](https://www.cisco.com/c/en/us/td/docs/security/firepower/quick_start/oci/ftdv-oci-gsg.pdf) to setup your FMC (Firewall Management Center) and Threat Defense Firewall. We are summarizing some useful steps and screenshots for your reference in each sections below. 
 
-   < update_this >
+## Cisco Firewall Managment Center Configuration 
 
+This section will include necessary configuration which you need to configure to support this use-case. Before you proceed to next section, you should setup a admin password through CLI (Instrcutions are printed after a successful run of this code) using below commands: 
 
-## Some Useful Configuration Pics on Cisco Firewall 
+```
+1.  Open an SSH client.
+2.  Use the following information to connect to the instance
+username: admin
+IP_Address: <fmc_public_ip>
+SSH Key
+For example:
+$ ssh –i id_rsa admin@<fmc_public_ip>
+3. It will ask you to enter admin password once you confirm it you should be able to login to FMC using GUI in a web browser: https://<fmc_public_ip>
+```
 
-   < update_this >
+At this point we will use FMC to manage our Firewalls. 
+
+###  Cisco Threat Defense Firewalls Configuration 
+
+We have summarized some steps here with screenshots. You can follow them for your reference as your enviorment might be little different. 
+
+1. Add each Threat Defense Firewall using FMC. You will need miniumum below required configuration:
+   - Threat Defense Firewall Public/Reachable IP to FMC
+   - User Friendly Hostname 
+   - Registration Key; **output.tf** file print those values on a successful launch via ORM or Terraform CLI. 
+   - Unique NAT key; **output.tf** file print those values on a successful launch via ORM or Terraform CLI. 
+
+![](./images/register.png)
+
+2. Verify registration was successful on both firewall. 
+
+![](./images/registered.png)
+
+3. Once registered add each firewall interfaces with their IP addresses details. 
+
+![](./images/interfaces.png)
+
+4. Create routes for Web/DB Spoke, Oracle Object Storage Networks and default via associated **inside** and **outside** subnet default gateways. 
+
+![](./images/routes.png)
+
+5. Create HealthCheck on each firewall interfaces so our Flexible Network Load Balancer becomes healthy. In out case we are using port **22** for health check over **TCP**. 
+
+![](./images/healthcheck.png)
+
+6. Create Network Address Transaltion to each traffic as per your traffic need. For example: East-West between db/web or North-South between db/web to internet. 
+
+![](./images/nat.png)
 
 
 ## Feedback 

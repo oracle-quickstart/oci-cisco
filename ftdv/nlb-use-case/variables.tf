@@ -62,7 +62,7 @@ variable "mp_fmc_listing_resource_version" {
 
 variable "vm_display_name" {
   description = "Instance Name"
-  default     = "Cisco-Firewall"
+  default     = "Cisco-FTDv-Firewall"
 }
 
 variable "vm_fmc_display_name" {

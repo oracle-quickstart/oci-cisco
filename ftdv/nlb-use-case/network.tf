@@ -141,7 +141,7 @@ resource "oci_core_route_table" "drg_route_table" {
   }
 
   route_rules {
-    destination       = "10.1.0.0/24"
+    destination       = "10.0.1.0/24"
     destination_type  = "CIDR_BLOCK"
     network_entity_id = data.oci_core_private_ips.outside_subnet_private_nlb_ip.private_ips[0].id
   }
