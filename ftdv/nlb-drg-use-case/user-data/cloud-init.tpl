@@ -1,6 +1,6 @@
 {
 "Hostname": "${hostname}",
-"AdminPassword": "myPassword@123456",
+"AdminPassword": "Cisco@1234",
 "FirewallMode": "routed",
 "IPv4Mode": "dhcp",
 "ManageLocally":"No",

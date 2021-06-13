@@ -64,6 +64,8 @@ variableGroups:
       - vm_display_name
       - vm_fmc_display_name
       - vcn_id
+      - db_vcn_id
+      - web_vcn_id
       - vcn_display_name
       - vcn_cidr_block
       - vcn_dns_label
@@ -91,7 +93,7 @@ variableGroups:
       - nlb_routetable_display_name
       - public_routetable_display_name
       - private_routetable_display_name
-      - lpg_routetable_display_name
+      - vcn_ingress_routetable_display_name
       - drg_routetable_display_name
       - sgw_routetable_display_name
       - diagnostic_routetable_display_name
@@ -177,7 +179,7 @@ variables:
   vm_display_name:
     type: string
     required: true
-    default: Cisco-Firewall
+    default: Cisco-FTDv-Firewall
     title: Firewall FTDv Instance Name(s)
     description: The name of the Instance of Firewall FTDv
 
@@ -348,6 +350,30 @@ variables:
     title: Existing Network
     description: An existing Virtual Cloud Network (VCN) in which to create the compute instances, network resources, and load balancers. If not specified, a new VCN is created.
 
+  web_vcn_id:
+    visible: #($network_strategy  == "Use Existing VCN and Subnet")
+      eq:
+        - network_strategy
+        - "Use Existing VCN and Subnet"
+    type: oci:core:vcn:id
+    dependsOn:
+      compartmentId: compartment_ocid
+    required: true
+    title: Existing Network
+    description: An existing Web Virtual Cloud Network (VCN) in which to create the compute instances, network resources, and load balancers. If not specified, a new VCN is created.
+
+  db_vcn_id:
+    visible: #($network_strategy  == "Use Existing VCN and Subnet")
+      eq:
+        - network_strategy
+        - "Use Existing VCN and Subnet"
+    type: oci:core:vcn:id
+    dependsOn:
+      compartmentId: compartment_ocid
+    required: true
+    title: Existing Network
+    description: An existing DB Virtual Cloud Network (VCN) in which to create the compute instances, network resources, and load balancers. If not specified, a new VCN is created.
+  
   vcn_cidr_block:
     visible: #($network_strategy  == ""Create New VCN and Subnet"")
       eq:
@@ -809,12 +835,12 @@ variables:
     title: Inside Route Table
     description: The name of the Inside Route Table
 
-  lpg_routetable_display_name:
+  vcn_ingress_routetable_display_name:
     type: string
     required: true
-    default: LPGRouteTable
-    title: LPG Route Table
-    description: The name of the LPG Route Table
+    default: VCNIngressRouteTable
+    title: Hub VCN Ingress Route Table
+    description: The name of the Hub VCN Ingress Route Table
 
   sgw_routetable_display_name:
     type: string

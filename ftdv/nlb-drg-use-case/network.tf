@@ -24,79 +24,85 @@ resource "oci_core_drg" "drg" {
 
 # ------ Attach DRG to Hub VCN
 resource "oci_core_drg_attachment" "hub_drg_attachment" {
-  drg_id = oci_core_drg.drg.id
-  vcn_id = local.use_existing_network ? var.vcn_id : oci_core_vcn.hub.0.id
-  display_name = "Firewall-VCN"
+  drg_id             = oci_core_drg.drg.id
+  vcn_id             = local.use_existing_network ? var.vcn_id : oci_core_vcn.hub.0.id
+  display_name       = "Firewall-VCN"
   drg_route_table_id = oci_core_drg_route_table.from_firewall_route_table.id
+
+  network_details {
+    id   = local.use_existing_network ? var.vcn_id : oci_core_vcn.hub.0.id
+    type = "VCN"
+    route_table_id = oci_core_route_table.vcn_ingress_route_table.0.id
+  }
 }
 
 # ------ Attach DRG to Web Spoke VCN
 resource "oci_core_drg_attachment" "web_drg_attachment" {
-  drg_id = oci_core_drg.drg.id
-  vcn_id = local.use_existing_network ? var.web_vcn_id : oci_core_vcn.web.0.id
-  display_name = "Web-Spoke-VCN"
+  drg_id             = oci_core_drg.drg.id
+  vcn_id             = local.use_existing_network ? var.web_vcn_id : oci_core_vcn.web.0.id
+  display_name       = "Web-Spoke-VCN"
   drg_route_table_id = oci_core_drg_route_table.to_firewall_route_table.id
 }
 
 # ------ Attach DRG to DB Spoke VCN
 resource "oci_core_drg_attachment" "db_drg_attachment" {
-  drg_id = oci_core_drg.drg.id
-  vcn_id = local.use_existing_network ? var.db_vcn_id : oci_core_vcn.db.0.id
-  display_name = "DB-Spoke-VCN"
+  drg_id             = oci_core_drg.drg.id
+  vcn_id             = local.use_existing_network ? var.db_vcn_id : oci_core_vcn.db.0.id
+  display_name       = "DB-Spoke-VCN"
   drg_route_table_id = oci_core_drg_route_table.to_firewall_route_table.id
 }
 
 # ------ DRG From Firewall Route Table
 resource "oci_core_drg_route_table" "from_firewall_route_table" {
-    drg_id = oci_core_drg.drg.id
-    display_name = "From-Firewall"
-    import_drg_route_distribution_id = oci_core_drg_route_distribution.firewall_drg_route_distribution.id
+  drg_id                           = oci_core_drg.drg.id
+  display_name                     = "From-Firewall"
+  import_drg_route_distribution_id = oci_core_drg_route_distribution.firewall_drg_route_distribution.id
 }
 
 # ------ DRG to Firewall Route Table
 resource "oci_core_drg_route_table" "to_firewall_route_table" {
-    drg_id = oci_core_drg.drg.id
-    display_name = "To-Firewall"
+  drg_id       = oci_core_drg.drg.id
+  display_name = "To-Firewall"
 }
 
 # ------ Add DRG To Firewall Route Table Entry
 resource "oci_core_drg_route_table_route_rule" "to_firewall_drg_route_table_route_rule" {
-    drg_route_table_id = oci_core_drg_route_table.to_firewall_route_table.id
-    destination = "0.0.0.0/0"
-    destination_type = "CIDR_BLOCK"
-    next_hop_drg_attachment_id = oci_core_drg_attachment.hub_drg_attachment.id
+  drg_route_table_id         = oci_core_drg_route_table.to_firewall_route_table.id
+  destination                = "0.0.0.0/0"
+  destination_type           = "CIDR_BLOCK"
+  next_hop_drg_attachment_id = oci_core_drg_attachment.hub_drg_attachment.id
 }
 
 # ---- DRG Route Import Distribution 
 resource "oci_core_drg_route_distribution" "firewall_drg_route_distribution" {
-    distribution_type = "IMPORT"
-    drg_id = oci_core_drg.drg.id
-    display_name = "Transit-Spokes"
+  distribution_type = "IMPORT"
+  drg_id            = oci_core_drg.drg.id
+  display_name      = "Transit-Spokes"
 }
 
 # ---- DRG Route Import Distribution Statements - One
 resource "oci_core_drg_route_distribution_statement" "firewall_drg_route_distribution_statement_one" {
-    drg_route_distribution_id = oci_core_drg_route_distribution.firewall_drg_route_distribution.id
-    action = "ACCEPT"
-    match_criteria {
+  drg_route_distribution_id = oci_core_drg_route_distribution.firewall_drg_route_distribution.id
+  action                    = "ACCEPT"
+  match_criteria {
     match_type = "DRG_ATTACHMENT_ID"
     # attachment_type = var.drg_route_distribution_statement_statements_match_criteria_attachment_type
     drg_attachment_id = oci_core_drg_attachment.web_drg_attachment.id
-    }
-    priority = "1"
+  }
+  priority = "1"
 
 }
 
 # ---- DRG Route Import Distribution Statements - Two 
 resource "oci_core_drg_route_distribution_statement" "firewall_drg_route_distribution_statement_two" {
-    drg_route_distribution_id = oci_core_drg_route_distribution.firewall_drg_route_distribution.id
-    action = "ACCEPT"
-    match_criteria {
+  drg_route_distribution_id = oci_core_drg_route_distribution.firewall_drg_route_distribution.id
+  action                    = "ACCEPT"
+  match_criteria {
     match_type = "DRG_ATTACHMENT_ID"
     # attachment_type = var.drg_route_distribution_statement_statements_match_criteria_attachment_type
     drg_attachment_id = oci_core_drg_attachment.db_drg_attachment.id
-    }
-    priority = "2"
+  }
+  priority = "2"
 
 }
 
@@ -126,7 +132,7 @@ resource "oci_core_default_route_table" "default_route_table" {
   }
 
   route_rules {
-    destination       = "10.1.0.0/24"
+    destination       = "10.0.1.0/24"
     destination_type  = "CIDR_BLOCK"
     network_entity_id = oci_core_drg.drg.id
   }
@@ -159,7 +165,7 @@ resource "oci_core_route_table" "outside_route_table" {
   }
 
   route_rules {
-    destination       = "10.1.0.0/24"
+    destination       = "10.0.1.0/24"
     destination_type  = "CIDR_BLOCK"
     network_entity_id = oci_core_drg.drg.id
   }
@@ -191,7 +197,7 @@ resource "oci_core_route_table" "diagnostic_route_table" {
   }
 
   route_rules {
-    destination       = "10.1.0.0/24"
+    destination       = "10.0.1.0/24"
     destination_type  = "CIDR_BLOCK"
     network_entity_id = oci_core_drg.drg.id
   }
@@ -217,7 +223,7 @@ resource "oci_core_route_table" "vcn_ingress_route_table" {
   }
 
   route_rules {
-    destination       = "10.1.0.0/24"
+    destination       = "10.0.1.0/24"
     destination_type  = "CIDR_BLOCK"
     network_entity_id = data.oci_core_private_ips.inside_subnet_private_nlb_ip.private_ips[0].id
   }
@@ -253,7 +259,7 @@ resource "oci_core_route_table" "nlb_route_table" {
   }
 
   route_rules {
-    destination       = "10.1.0.0/24"
+    destination       = "10.0.1.0/24"
     destination_type  = "CIDR_BLOCK"
     network_entity_id = oci_core_drg.drg.id
   }
@@ -274,7 +280,7 @@ resource "oci_core_route_table" "nlb_route_table" {
 #   }
 
 #   route_rules {
-#     destination       = "10.1.0.0/24"
+#     destination       = "10.0.1.0/24"
 #     destination_type  = "CIDR_BLOCK"
 #     network_entity_id = data.oci_core_private_ips.outside_subnet_private_nlb_ip.private_ips[0].id
 #   }
