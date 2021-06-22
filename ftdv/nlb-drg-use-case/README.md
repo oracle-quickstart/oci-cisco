@@ -1,4 +1,4 @@
-# Network Load Balancer Sandwich Topology - Reference Architecture with DRG Enhancments
+# Network Load Balancer Sandwich Topology - Reference Architecture with DRG Enhancements
 
 We are using hub-and-spoke architecture (often called as star topology) and flexible network load balancer with Cisco Thread Defense Firewall. This architecture has a central component (the hub) that's connected to multiple networks around it, like a spoke. We are using Cisco Threat Defence BOYL Listing from OCI Marketplace.
 
@@ -6,7 +6,7 @@ For details of the architecture, see [_Set up a hub-and-spoke network topology_]
 
 ## Architecture Diagram
 
-![](./images/nlb.png)
+![](./images/arch.png)
 
 
 ## Prerequisites

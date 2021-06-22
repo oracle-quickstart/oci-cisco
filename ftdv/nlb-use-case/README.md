@@ -6,7 +6,7 @@ For details of the architecture, see [_Set up a hub-and-spoke network topology_]
 
 ## Architecture Diagram
 
-![](./images/nlb.png)
+![](./images/arch.png)
 
 
 ## Prerequisites
