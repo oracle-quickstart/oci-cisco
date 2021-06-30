@@ -25,7 +25,7 @@ resource "oci_core_drg" "drg" {
 # ------ Attach DRG to Hub VCN
 resource "oci_core_drg_attachment" "hub_drg_attachment" {
   drg_id             = oci_core_drg.drg.id
-  vcn_id             = local.use_existing_network ? var.vcn_id : oci_core_vcn.hub.0.id
+  # vcn_id             = local.use_existing_network ? var.vcn_id : oci_core_vcn.hub.0.id
   display_name       = "Firewall-VCN"
   drg_route_table_id = oci_core_drg_route_table.from_firewall_route_table.id
 
@@ -35,6 +35,7 @@ resource "oci_core_drg_attachment" "hub_drg_attachment" {
     route_table_id = oci_core_route_table.vcn_ingress_route_table.0.id
   }
 }
+
 
 # ------ Attach DRG to Web Spoke VCN
 resource "oci_core_drg_attachment" "web_drg_attachment" {

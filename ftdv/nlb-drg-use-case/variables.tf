@@ -403,10 +403,10 @@ variable "nlb_routetable_display_name" {
 }
 
 
-variable "lpg_routetable_display_name" {
-  description = "LPG route table Name"
-  default     = "LPGRouteTable"
-}
+# variable "lpg_routetable_display_name" {
+#   description = "LPG route table Name"
+#   default     = "LPGRouteTable"
+# }
 
 variable "drg_routetable_display_name" {
   description = "DRG route table Name"
