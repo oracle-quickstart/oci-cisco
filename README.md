@@ -21,6 +21,7 @@ This project includes below solutions supported:
 - **Cisco Threat Defense Network Load Balancer - Sandwich Topology** : [Cisco-oci-nlb-sandwich-topology](./ftdv/nlb-use-case) this allows end user to deploy Cisco solutions in hub and spoke architecture. We are using Local Peering Gateways to communicate between VCNs. 
 - **Cisco Threat Defense Network Load Balancer - Sandwich Topology with Dynamic Routing Gateway** : [Cisco-oci-nlb-sandwich-topology-with-drg](./ftdv/nlb-drg-use-case) this allows end user to deploy Cisco solutions in hub and spoke architecture. We are using Dynamic Routing Gateways to communicate between VCNs. 
 - **Cisco ASAv with Network Load Balancer - Sandwich Topology** : [Cisco-oci-asa-simple-topology](./asav/nlb-use-case) this is work in progress but it does deploy ASAv solution. 
+- **CIS Landing Zone**: [CIS Landing Zone](./cis-landing-zone) this deploys Cisco Secure Firewall Threat Defense in active/active architecture.
 
 ## How to use these templates
 
