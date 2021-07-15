@@ -8,6 +8,9 @@ For details of the architecture, see [_Set up a hub-and-spoke network topology_]
 
 ![](./images/nlb.png)
 
+## Validated Version Details
+
+We have validated **7.0.0** Secure Threat Defense Firewall for this architecture.
 
 ## Prerequisites
 
