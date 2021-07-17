@@ -7,7 +7,7 @@ version: "20210210"
 
 # URL of Logo Icon used on Application Information tab. Logo must be 130x130 pixels.
 # (Optional)
-logoUrl: https://cloudmarketplace.oracle.com/marketplace/content?contentId=87036907
+logoUrl: https://cloudmarketplace.oracle.com/marketplace/content?contentId=85291318
 
 # Used in Application Information tab to Hyperlink Title and Logo to the Marketplace
 # Listing.
@@ -16,7 +16,7 @@ logoUrl: https://cloudmarketplace.oracle.com/marketplace/content?contentId=87036
 # "marketplace-listing-id" tag for the same purpose.
 source:
   type: marketplace
-  reference: 71285857
+  reference: 84304659
 
 locale: "en"
 variableGroups:
