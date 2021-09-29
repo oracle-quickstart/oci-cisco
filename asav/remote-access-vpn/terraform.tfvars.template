@@ -1,0 +1,16 @@
+# User Authentication to OCI
+tenancy_ocid = ""
+user_ocid = ""
+fingerprint = ""
+private_key_path = "~/oci_api_key.pem"
+
+# SSH Keys
+ssh_public_key = ""
+
+# Region
+region = "us-phoenix-1"
+
+# Compartment
+compute_compartment_ocid = ""
+network_compartment_ocid = ""
+availability_domain_number = "1"
