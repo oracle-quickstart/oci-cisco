@@ -1,4 +1,3 @@
-# DRAFT - Documentation work in progress
 # Cisco Remote Access VPN - Reference Architecture
 
 We are using hub-and-spoke architecture (often called as star topology) and flexible network load balancer with Cisco ASAv Firewall. This architecture has a central component (the hub) that's connected to multiple networks around it, like a spoke. We are using Cisco Threat Defence BOYL Listing from OCI Marketplace.
