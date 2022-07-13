@@ -16,13 +16,13 @@ variable "mp_listing_id" {
 
 # ---- Marketplace Listing Image OCID
 variable "mp_listing_resource_id" {
-  default     = "ocid1.image.oc1..aaaaaaaamybyw5im3tfl5fimi3nd57no3mtczwenrll7fgkzi4zgbc32tlqa"
+  default     = "ocid1.image.oc1..aaaaaaaax255rphpwnial5yg4kokla3czjtr6y6jzj7tgb3wyaf6fa6p54aa"
   description = "Marketplace Listing Image OCID"
 }
 
 # ---- Marketplace Listing Version Name
 variable "mp_listing_resource_version" {
-  default     = "7.0.0-94"
+  default     = "7.0.2-88"
   description = "Marketplace Listing Package/Resource Version"
 }
 
