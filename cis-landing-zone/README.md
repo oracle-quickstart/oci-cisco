@@ -8,6 +8,8 @@ For details of CIS Landing Zone, see [_CIS Landing Zone Enviornment_](https://gi
 
 We have validated **7.0.0** Secure Threat Defense Firewall for this architecture.
 
+You can use this [Blog](https://blogs.oracle.com/cloud-infrastructure/post/explore-marketplace-listings-using-oracle-cloud-shell) to know more about latest Firewall version from OCI Marektplace and update required parameters in **variables.tf** file to support additional versions. 
+
 ## Prerequisites
 
 You should complete below pre-requisites before proceeding to next section:
